@@ -1,71 +1,82 @@
 import os
 import face_recognition
-import pickle
+import numpy as np
 import cv2
+import json
+from collections import defaultdict
 
 DATASET_DIR = "dataset"
-ENCODINGS_FILE = "encodings.pkl"
+OUTPUT_FILE = "encodings.json"
 
-known_encodings = []
-known_names = []
-
-# Check if dataset directory exists
-if not os.path.exists(DATASET_DIR):
-    print(f"[ERROR] Dataset directory '{DATASET_DIR}' not found!")
-    exit(1)
-
-# Loop through each person in the dataset
-for person_name in os.listdir(DATASET_DIR):
-    person_folder = os.path.join(DATASET_DIR, person_name)
-    
-    if not os.path.isdir(person_folder):
-        continue
-    
-    print(f"[INFO] Processing images for {person_name}")
-    
-    # Loop through each image for this person
-    for image_name in os.listdir(person_folder):
-        if not image_name.lower().endswith(('.png', '.jpg', '.jpeg')):
+def align_face(image, face_locations):
+    aligned_faces = []
+    for top, right, bottom, left in face_locations:
+        face = image[top:bottom, left:right]
+        if face.size == 0:
             continue
-            
-        image_path = os.path.join(person_folder, image_name)
-        print(f"[INFO] Processing {image_path}")
-        
-        try:
-            # Load image
-            image = face_recognition.load_image_file(image_path)
-            
-            # Get face encodings - simplified approach
-            encodings = face_recognition.face_encodings(image)
-            
-            if len(encodings) > 0:
-                # Use the first encoding if multiple faces are found
-                known_encodings.append(encodings[0])
-                known_names.append(person_name)
-                print(f"[SUCCESS] Encoded face for {person_name}")
-            else:
-                print(f"[WARNING] No faces found in {image_path}")
-                
-        except Exception as e:
-            print(f"[ERROR] Failed to process {image_path}: {str(e)}")
+        face = cv2.resize(face, (160, 160))  # Standardized size
+        aligned_faces.append(face)
+    return aligned_faces
 
-if len(known_encodings) == 0:
-    print("[ERROR] No faces were encoded! Please check your dataset.")
-    exit(1)
+def compute_encodings(dataset_dir):
+    encodings_dict = defaultdict(list)
 
-# Save encodings to file
-print(f"[INFO] Saving {len(known_encodings)} encodings...")
-data = {"encodings": known_encodings, "names": known_names}
+    if not os.path.exists(dataset_dir):
+        print(f"[ERROR] Dataset directory '{dataset_dir}' not found!")
+        exit(1)
 
-with open(ENCODINGS_FILE, "wb") as f:
-    pickle.dump(data, f)
+    for person_name in os.listdir(dataset_dir):
+        person_path = os.path.join(dataset_dir, person_name)
+        if not os.path.isdir(person_path):
+            continue
 
-print(f"[INFO] Encodings saved to {ENCODINGS_FILE}")
-print(f"[INFO] Total faces encoded: {len(known_encodings)}")
+        print(f"[INFO] Processing {person_name}")
+        for image_name in os.listdir(person_path):
+            if not image_name.lower().endswith(('.png', '.jpg', '.jpeg')):
+                continue
 
-# Print summary
-from collections import Counter
-name_counts = Counter(known_names)
-print("\n[INFO] Summary:")
-for name, count in name_counts.items():
-    print(f"  {name}: {count} images")
+            image_path = os.path.join(person_path, image_name)
+            try:
+                image = face_recognition.load_image_file(image_path)
+                face_locations = face_recognition.face_locations(image)
+                if not face_locations:
+                    print(f"[WARNING] No faces found in {image_path}")
+                    continue
+
+                aligned_faces = align_face(image, face_locations)
+
+                for face in aligned_faces:
+                    encodings = face_recognition.face_encodings(face)
+                    if encodings:
+                        encodings_dict[person_name].append(encodings[0])
+            except Exception as e:
+                print(f"[ERROR] Failed to process {image_path}: {str(e)}")
+
+    return encodings_dict
+
+def save_average_encodings(encodings_dict, output_file):
+    final_encodings = {}
+
+    for name, enc_list in encodings_dict.items():
+        if len(enc_list) == 0:
+            continue
+        avg_encoding = np.mean(enc_list, axis=0).tolist()
+        final_encodings[name] = avg_encoding
+        print(f"[ENCODED] {name}: {len(enc_list)} samples averaged")
+
+    with open(output_file, 'w') as f:
+        json.dump(final_encodings, f)
+
+    print(f"[INFO] Encodings saved to {output_file}")
+    print(f"[INFO] Total users encoded: {len(final_encodings)}")
+
+def main():
+    print("[INFO] Starting encoding process...")
+    encodings_dict = compute_encodings(DATASET_DIR)
+    if not encodings_dict:
+        print("[ERROR] No encodings were generated.")
+        exit(1)
+    save_average_encodings(encodings_dict, OUTPUT_FILE)
+
+if __name__ == "__main__":
+    main()
