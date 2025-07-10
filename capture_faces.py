@@ -25,4 +25,4 @@ def capture_images(person_name, num_images=30):
     cv2.destroyAllWindows()
 
 
-capture_images("Juhayer", num_images=40)
+capture_images("Julia", num_images=40)
