@@ -1,0 +1,433 @@
+/* src/components/EmployeeRegistration.css */
+.employee-registration {
+  padding: 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.registration-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.registration-title {
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+
+.registration-subtitle {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  margin: 0;
+}
+
+.registration-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.registration-form {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-section .section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 24px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.label-icon {
+  font-size: 16px;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-input:disabled,
+.form-select:disabled {
+  background: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+}
+
+.btn-danger {
+  background: linear-gradient(45deg, #f44336, #d32f2f);
+}
+
+.btn-secondary {
+  background: linear-gradient(45deg, #6c757d, #495057);
+}
+
+.btn-icon {
+  font-size: 18px;
+}
+
+.camera-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.camera-container {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-placeholder {
+  text-align: center;
+  color: #666;
+  padding: 40px 20px;
+}
+
+.placeholder-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.camera-active {
+  width: 100%;
+  height: 100%;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+.camera-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.face-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 300px;
+  pointer-events: none;
+}
+
+.face-frame {
+  width: 100%;
+  height: 100%;
+  border: 3px solid;
+  border-radius: 12px;
+  transition: border-color 0.3s ease;
+}
+
+.face-overlay.face-detected .face-frame {
+  border-color: #4CAF50;
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.4);
+}
+
+.face-overlay.no-face .face-frame {
+  border-color: #FF9800;
+  box-shadow: 0 0 20px rgba(255, 152, 0, 0.4);
+}
+
+.capture-status {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  margin-top: 16px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.status-indicator.success {
+  background: rgba(76, 175, 80, 0.1);
+  color: #2E7D32;
+}
+
+.status-indicator.warning {
+  background: rgba(255, 152, 0, 0.1);
+  color: #E65100;
+}
+
+.status-icon {
+  font-size: 18px;
+}
+
+.progress-section {
+  margin-top: 12px;
+}
+
+.progress-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  height: 100%;
+}
+
+.result-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.result-message h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.result-container.complete .result-message h3 {
+  color: #2E7D32;
+}
+
+.result-container.error .result-message h3 {
+  color: #C62828;
+}
+
+.result-message p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.message-container {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.message-container.capturing {
+  background: rgba(33, 150, 243, 0.1);
+  border: 1px solid rgba(33, 150, 243, 0.2);
+}
+
+.message-container.complete {
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.message-container.error {
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.2);
+}
+
+.status-message {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.message-container.capturing .status-message {
+  color: #1565C0;
+}
+
+.message-container.complete .status-message {
+  color: #2E7D32;
+}
+
+.message-container.error .status-message {
+  color: #C62828;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .registration-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .camera-container {
+    min-height: 350px;
+  }
+  
+  .video-container {
+    height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .employee-registration {
+    padding: 20px 16px;
+  }
+  
+  .registration-title {
+    font-size: 28px;
+  }
+  
+  .registration-form,
+  .camera-section {
+    padding: 20px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    justify-content: center;
+  }
+  
+  .face-overlay {
+    width: 200px;
+    height: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .registration-title {
+    font-size: 24px;
+  }
+  
+  .registration-form,
+  .camera-section {
+    padding: 16px;
+  }
+  
+  .camera-container {
+    min-height: 300px;
+  }
+  
+  .video-container {
+    height: 300px;
+  }
+  
+  .face-overlay {
+    width: 160px;
+    height: 200px;
+  }
+  
+  .result-icon {
+    font-size: 48px;
+  }
+  
+  .result-message h3 {
+    font-size: 20px;
+  }
+}

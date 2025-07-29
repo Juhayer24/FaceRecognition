@@ -1,0 +1,514 @@
+/* src/components/AttendanceRecords.css */
+.attendance-records {
+  padding: 20px 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.records-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 0 20px;
+}
+
+.records-title {
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-export {
+  background: linear-gradient(45deg, #4CAF50, #388E3C);
+}
+
+.btn-refresh {
+  background: linear-gradient(45deg, #2196F3, #1976D2);
+}
+
+.btn-clear {
+  background: linear-gradient(45deg, #FF9800, #F57C00);
+  font-size: 12px;
+  padding: 8px 16px;
+}
+
+.btn-icon {
+  font-size: 16px;
+}
+
+.filters-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 0 20px 30px 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.filters-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  align-items: end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+}
+
+.filter-input,
+.filter-select {
+  padding: 10px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
+  transition: border-color 0.3s ease;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: end;
+}
+
+.records-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 0 20px 30px 20px;
+}
+
+.summary-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.summary-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+}
+
+.summary-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: #333;
+}
+
+.summary-value.present {
+  color: #4CAF50;
+}
+
+.summary-value.late {
+  color: #FF9800;
+}
+
+.summary-value.absent {
+  color: #f44336;
+}
+
+.records-table-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  margin: 0 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.records-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.records-table th {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.records-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.records-table th.sortable:hover {
+  background: linear-gradient(45deg, #5a6fd8, #6a42a0);
+}
+
+.sort-indicator {
+  margin-left: 8px;
+  font-size: 12px;
+}
+
+.records-table td {
+  padding: 16px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+
+.record-row {
+  transition: background-color 0.3s ease;
+}
+
+.record-row:hover {
+  background: rgba(248, 249, 250, 0.8);
+}
+
+.record-row.status-absent {
+  background: rgba(244, 67, 54, 0.02);
+}
+
+.record-row.status-late {
+  background: rgba(255, 152, 0, 0.02);
+}
+
+.employee-cell {
+  min-width: 200px;
+}
+
+.employee-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.employee-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.employee-details {
+  flex: 1;
+}
+
+.employee-name {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.employee-id {
+  font-size: 12px;
+  color: #666;
+}
+
+.department-cell {
+  font-weight: 500;
+  color: #555;
+}
+
+.date-cell {
+  font-family: 'Courier New', monospace;
+  font-weight: 500;
+}
+
+.time-cell {
+  font-family: 'Courier New', monospace;
+  font-weight: 500;
+  color: #555;
+}
+
+.hours-cell {
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.status-cell {
+  text-align: center;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+}
+
+.status-badge.status-present {
+  background: #4CAF50;
+}
+
+.status-badge.status-late {
+  background: #FF9800;
+}
+
+.status-badge.status-absent {
+  background: #f44336;
+}
+
+.status-icon {
+  font-size: 14px;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.loading-spinner {
+  font-size: 48px;
+  animation: spin 2s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.no-records {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: #666;
+}
+
+.no-records-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.no-records h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.no-records p {
+  margin: 0;
+  color: #999;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-top: 1px solid #f0f0f0;
+  background: rgba(248, 249, 250, 0.5);
+}
+
+.pagination-btn {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #f8f9fa;
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+}
+
+.records-info {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .filters-container {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 992px) {
+  .records-header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+  
+  .filters-container {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  
+  .records-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .attendance-records {
+    padding: 20px 16px;
+  }
+  
+  .records-header,
+  .filters-section,
+  .records-summary,
+  .records-table-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .records-title {
+    font-size: 28px;
+  }
+  
+  .filters-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .records-summary {
+    grid-template-columns: 1fr;
+  }
+  
+  .records-table-container {
+    overflow-x: auto;
+  }
+  
+  .records-table {
+    min-width: 800px;
+  }
+  
+  .pagination {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .pagination-info {
+    order: -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .records-title {
+    font-size: 24px;
+  }
+  
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .btn {
+    justify-content: center;
+  }
+  
+  .filters-section {
+    padding: 16px;
+  }
+  
+  .summary-card {
+    padding: 16px;
+  }
+  
+  .employee-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  
+  .employee-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+}
